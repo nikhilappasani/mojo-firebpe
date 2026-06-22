@@ -1,0 +1,14 @@
+# pixi environments
+.pixi/
+
+# compiled outputs
+*.mojopkg
+__pycache__/
+*.pyc
+
+# test artifacts
+/tmp/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,33 @@
+[project]
+name = "firebpe"
+version = "0.0.0"
+description = "Fast byte-level BPE tokenizer for Mojo (tiktoken-compatible)"
+authors = ["firebpe contributors"]
+channels = ["conda-forge", "https://conda.modular.com/max", "https://repo.prefix.dev/mojo-community"]
+platforms = ["linux-64"]
+license = "Apache-2.0"
+readme = "README.md"
+
+[dependencies]
+max = ">=25.1"
+
+[tasks]
+build      = "mojo package src/firebpe -o firebpe.mojopkg"
+test       = "mojo run tests/runner.mojo"
+conformance = "mojo run tests/conformance/runner.mojo"
+bench      = "mojo run benchmarks/bench_encode.mojo"
+gen-unicode = "python scripts/gen_unicode_tables.py"
+fmt        = "mojo format src/ tests/ benchmarks/"
+
+[feature.pyregex.dependencies]
+python = ">=3.11"
+regex  = "*"
+
+[feature.conformance.dependencies]
+python   = ">=3.11"
+tiktoken = "*"
+
+[environments]
+default     = { solve-group = "default" }
+pyregex     = { features = ["pyregex"], solve-group = "default" }
+conformance = { features = ["conformance"], solve-group = "default" }

@@ -1,0 +1,499 @@
+{
+  "tiktoken_version": "0.13.0",
+  "encoding": "o200k_base",
+  "cases": [
+    {
+      "input": "Hello, world!",
+      "expected_ids": [
+        13225,
+        11,
+        2375,
+        0
+      ]
+    },
+    {
+      "input": "The quick brown fox jumps over the lazy dog.",
+      "expected_ids": [
+        976,
+        4853,
+        19705,
+        68347,
+        65613,
+        1072,
+        290,
+        29082,
+        6446,
+        13
+      ]
+    },
+    {
+      "input": "你好世界",
+      "expected_ids": [
+        177519,
+        28428
+      ]
+    },
+    {
+      "input": "🌍🌎🌏",
+      "expected_ids": [
+        64364,
+        235,
+        64364,
+        236,
+        64364,
+        237
+      ]
+    },
+    {
+      "input": "こんにちは",
+      "expected_ids": [
+        95839
+      ]
+    },
+    {
+      "input": "مرحبا بالعالم",
+      "expected_ids": [
+        158894,
+        26537,
+        101462,
+        12773
+      ]
+    },
+    {
+      "input": "it's a wonderful life",
+      "expected_ids": [
+        64190,
+        261,
+        10469,
+        2615
+      ]
+    },
+    {
+      "input": "they're going to do it",
+      "expected_ids": [
+        33574,
+        4118,
+        2966,
+        316,
+        621,
+        480
+      ]
+    },
+    {
+      "input": "I've been waiting",
+      "expected_ids": [
+        30754,
+        1339,
+        12028
+      ]
+    },
+    {
+      "input": "123",
+      "expected_ids": [
+        7633
+      ]
+    },
+    {
+      "input": "1234",
+      "expected_ids": [
+        7633,
+        19
+      ]
+    },
+    {
+      "input": "12345",
+      "expected_ids": [
+        7633,
+        2548
+      ]
+    },
+    {
+      "input": "3.14159",
+      "expected_ids": [
+        18,
+        13,
+        16926,
+        4621
+      ]
+    },
+    {
+      "input": "   ",
+      "expected_ids": [
+        271
+      ]
+    },
+    {
+      "input": "\n\n\n",
+      "expected_ids": [
+        2499
+      ]
+    },
+    {
+      "input": "\t\t",
+      "expected_ids": [
+        335
+      ]
+    },
+    {
+      "input": " hello",
+      "expected_ids": [
+        40617
+      ]
+    },
+    {
+      "input": "hello ",
+      "expected_ids": [
+        24912,
+        220
+      ]
+    },
+    {
+      "input": "Hello! How are you?",
+      "expected_ids": [
+        13225,
+        0,
+        3253,
+        553,
+        481,
+        30
+      ]
+    },
+    {
+      "input": "one... two... three...",
+      "expected_ids": [
+        690,
+        1008,
+        1920,
+        1008,
+        3407,
+        1008
+      ]
+    },
+    {
+      "input": "line1\nline2\nline3",
+      "expected_ids": [
+        1137,
+        16,
+        198,
+        1137,
+        17,
+        198,
+        1137,
+        18
+      ]
+    },
+    {
+      "input": "tab\there",
+      "expected_ids": [
+        11957,
+        197,
+        19992
+      ]
+    },
+    {
+      "input": "café",
+      "expected_ids": [
+        66,
+        103112
+      ]
+    },
+    {
+      "input": "naïve",
+      "expected_ids": [
+        1503,
+        9954,
+        737
+      ]
+    },
+    {
+      "input": "résumé",
+      "expected_ids": [
+        60278,
+        74080
+      ]
+    },
+    {
+      "input": "",
+      "expected_ids": []
+    },
+    {
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "expected_ids": [
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525,
+        117525
+      ]
+    },
+    {
+      "input": "hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello",
+      "expected_ids": [
+        24912,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617,
+        40617
+      ]
+    },
+    {
+      "input": "GPT-4 uses cl100k_base tokenization with vocab_size=100277.",
+      "expected_ids": [
+        162016,
+        12,
+        19,
+        8844,
+        567,
+        1353,
+        74,
+        17096,
+        6602,
+        2860,
+        483,
+        72627,
+        5044,
+        28,
+        1353,
+        30351,
+        13
+      ]
+    },
+    {
+      "input": "  leading and trailing spaces  ",
+      "expected_ids": [
+        220,
+        8117,
+        326,
+        57985,
+        18608,
+        256
+      ]
+    },
+    {
+      "input": "ALLCAPS AND mixed Case",
+      "expected_ids": [
+        7011,
+        56928,
+        50,
+        6178,
+        16435,
+        18964
+      ]
+    }
+  ]
+}
