@@ -8,7 +8,7 @@ Incremental pair counting: only affected words recount after each merge.
 from .vocab import RankTable
 from .core import Encoder
 from .pretok.scanner import ScannerPreTok
-from .loaders.encodings import CL100K_PATTERN
+from .loaders.encodings import CL100K_PATTERN, O200K_PATTERN
 
 
 struct WordCount(Movable, Copyable):
@@ -96,7 +96,7 @@ struct Trainer:
             raise Error("vocab_size must be > 256 (256 byte tokens are the base)")
 
         # Step 1: Pre-tokenize and count word frequencies.
-        var pretok = ScannerPreTok.cl100k()
+        var pretok = ScannerPreTok(self.pattern == O200K_PATTERN)
         var text_bytes = text.as_bytes()
         var span = Span[UInt8](text_bytes)
         var pieces = pretok.split(span)

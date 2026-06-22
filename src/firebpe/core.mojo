@@ -149,8 +149,10 @@ struct Encoder(Movable):
                     continue
 
             # Find end of non-special span (up to next special or end of text).
+            # Scan ahead even for allow_none so that disallowed specials mid-text
+            # are encountered at their position and raise in the next iteration.
             var span_end = n
-            if not self.specials.is_empty() and not policy.is_none():
+            if not self.specials.is_empty():
                 span_end = self._next_special_pos(text, pos, n)
 
             # Pre-tokenize the non-special span.
@@ -305,12 +307,22 @@ struct Encoder(Movable):
                 out.append(0xEF); out.append(0xBF); out.append(0xBD)
                 i += 1
                 continue
+            elif b < 0xC2:
+                # 0xC0/0xC1 — overlong encoding.
+                out.append(0xEF); out.append(0xBF); out.append(0xBD)
+                i += 1
+                continue
             elif b < 0xE0:
                 seq_len = 2
             elif b < 0xF0:
                 seq_len = 3
-            else:
+            elif b <= 0xF4:
                 seq_len = 4
+            else:
+                # Lead byte > 0xF4 — out of Unicode range.
+                out.append(0xEF); out.append(0xBF); out.append(0xBD)
+                i += 1
+                continue
 
             var valid = True
             if i + seq_len > n:
@@ -320,6 +332,20 @@ struct Encoder(Movable):
                     if raw[i + j] < 0x80 or raw[i + j] >= 0xC0:
                         valid = False
                         break
+
+            # Range checks for 3- and 4-byte sequences.
+            if valid and seq_len == 3:
+                var b1 = raw[i + 1]
+                if b == 0xE0 and b1 < 0xA0:  # overlong
+                    valid = False
+                if b == 0xED and b1 >= 0xA0:  # surrogate
+                    valid = False
+            if valid and seq_len == 4:
+                var b1 = raw[i + 1]
+                if b == 0xF0 and b1 < 0x90:  # overlong
+                    valid = False
+                if b == 0xF4 and b1 > 0x8F:  # > U+10FFFF
+                    valid = False
 
             if valid:
                 for j in range(seq_len):
