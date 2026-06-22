@@ -219,14 +219,29 @@ struct Encoder(Movable):
     def _ids_to_bytes(self, ids: List[Int]) -> List[UInt8]:
         var raw = List[UInt8]()
         for i in range(len(ids)):
-            var tok_bytes = self.ranks.bytes_of(ids[i])
-            for j in range(len(tok_bytes)):
-                raw.append(tok_bytes[j])
+            var id = ids[i]
+            # Special tokens are not in the rank table.
+            # Linear scan over specials (n ≤ ~20) avoids raising Dict access.
+            var found_special = False
+            for entry in self.specials._str_to_id.items():
+                if entry.value == id:
+                    var s_bytes = entry.key.as_bytes()
+                    for j in range(len(s_bytes)):
+                        raw.append(s_bytes[j])
+                    found_special = True
+                    break
+            if not found_special:
+                var tok_bytes = self.ranks.bytes_of(id)
+                for j in range(len(tok_bytes)):
+                    raw.append(tok_bytes[j])
         return raw^
 
     def _bytes_to_string_strict(self, raw: List[UInt8]) raises -> String:
-        """Convert bytes to String, raising on invalid UTF-8."""
-        # Validate UTF-8 before building the String.
+        """Convert bytes to String, raising on invalid UTF-8.
+
+        Validates: continuation bytes, overlong encodings (0xC0/0xC1, E0+<A0,
+        F0+<90), surrogates (U+D800-U+DFFF), out-of-range (>U+10FFFF, lead>0xF4).
+        """
         var i = 0
         var n = len(raw)
         while i < n:
@@ -238,17 +253,36 @@ struct Encoder(Movable):
                 raise_invalid_utf8(i)
                 seq_len = 1  # unreachable
             elif b < 0xE0:
+                if b < 0xC2:  # 0xC0/0xC1 are overlong encodings
+                    raise_invalid_utf8(i)
                 seq_len = 2
             elif b < 0xF0:
                 seq_len = 3
-            else:
+            elif b <= 0xF4:
                 seq_len = 4
+            else:
+                raise_invalid_utf8(i)  # lead byte > 0xF4 is out of Unicode range
+                seq_len = 1  # unreachable
 
             if i + seq_len > n:
                 raise_invalid_utf8(i)
 
             for j in range(1, seq_len):
                 if raw[i + j] < 0x80 or raw[i + j] >= 0xC0:
+                    raise_invalid_utf8(i)
+
+            # Range checks for 3- and 4-byte sequences.
+            if seq_len == 3:
+                var b1 = raw[i + 1]
+                if b == 0xE0 and b1 < 0xA0:  # overlong: encodes U+0000-U+007F
+                    raise_invalid_utf8(i)
+                if b == 0xED and b1 >= 0xA0:  # surrogate: U+D800-U+DFFF
+                    raise_invalid_utf8(i)
+            elif seq_len == 4:
+                var b1 = raw[i + 1]
+                if b == 0xF0 and b1 < 0x90:  # overlong: encodes U+0000-U+FFFF
+                    raise_invalid_utf8(i)
+                if b == 0xF4 and b1 > 0x8F:  # > U+10FFFF
                     raise_invalid_utf8(i)
 
             i += seq_len
@@ -300,8 +334,12 @@ struct Encoder(Movable):
     # ── Vocab info ────────────────────────────────────────────────────────────
 
     def n_vocab(self) -> Int:
-        """Total vocabulary size (mergeable tokens + special tokens)."""
-        return self.ranks.n_vocab() + len(self.specials._str_to_id)
+        """Total vocabulary size = max token ID across ranks and specials + 1."""
+        var max_id = self.ranks.n_vocab() - 1
+        for entry in self.specials._str_to_id.items():
+            if entry.value > max_id:
+                max_id = entry.value
+        return max_id + 1
 
     # ── Save ──────────────────────────────────────────────────────────────────
 
